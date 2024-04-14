@@ -48,6 +48,12 @@ bool ParametricMesh::Triangles::done() const noexcept {
 	return i_[1] == mesh_->segments_[1];
 }
 
+int ParametricMesh::Triangles::count() const noexcept {
+	if (mesh_->segments_[0] == 0 || mesh_->segments_[1] == 0) return 0;
+	return mesh_->segments_[0] * mesh_->segments_[1] * 2;
+}
+
+
 void ParametricMesh::Triangles::next() {
 	if (done()) throw std::out_of_range("Done!");
 
@@ -92,6 +98,12 @@ bool ParametricMesh::Quads::done() const noexcept {
 	return i_[1] == mesh_->segments_[1];
 }
 
+int ParametricMesh::Quads::count() const noexcept {
+	if (mesh_->segments_[0] == 0 || mesh_->segments_[1] == 0) return 0;
+	return mesh_->segments_[0] * mesh_->segments_[1];
+}
+
+
 void ParametricMesh::Quads::next() {
 	if (done()) throw std::out_of_range("Done!");
 
@@ -114,12 +126,15 @@ MeshVertex ParametricMesh::Vertices::generate() const {
 	return mesh_->eval_({i_[0] * mesh_->delta_[0], i_[1] * mesh_->delta_[1]});
 }
 
-
 bool ParametricMesh::Vertices::done() const noexcept {
 	if (mesh_->segments_[0] == 0 || mesh_->segments_[1] == 0) return true;
 	return i_[1] > mesh_->segments_[1];
 }
 
+int ParametricMesh::Vertices::count() const noexcept {
+	if (mesh_->segments_[0] == 0 || mesh_->segments_[1] == 0) return true;
+	return (mesh_->segments_[0] + 1) * (mesh_->segments_[1] + 1);
+}
 
 void ParametricMesh::Vertices::next() {
 	if (done()) throw std::out_of_range("Done!");
@@ -130,9 +145,6 @@ void ParametricMesh::Vertices::next() {
 		++i_[1];
 	}
 }
-
-
-
 
 ParametricMesh::ParametricMesh(
 	std::function<MeshVertex(const gml::dvec2& t)> eval,

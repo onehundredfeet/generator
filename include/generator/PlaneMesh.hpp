@@ -39,6 +39,9 @@ public:
 
 	Vertices vertices() const noexcept { return parametricMesh_.vertices(); }
 
+	using Quads = typename Impl::Quads;
+
+	Quads quads() const noexcept { return parametricMesh_.quads(); }
 };
 
 

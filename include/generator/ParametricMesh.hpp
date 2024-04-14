@@ -28,6 +28,7 @@ public:
 		Triangle generate() const;
 		bool done() const noexcept;
 		void next();
+		int count() const noexcept;
 
 	private:
 
@@ -48,7 +49,7 @@ public:
 		Quad generate() const;
 		bool done() const noexcept;
 		void next();
-
+		int count() const noexcept;
 	private:
 
 		Quads(const ParametricMesh& mesh);
@@ -67,6 +68,7 @@ public:
 		MeshVertex generate() const;
 		bool done() const noexcept;
 		void next();
+		int count() const noexcept;
 
 	private:
 
