@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 3.12)
 project(generator)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
@@ -8,7 +8,7 @@ include(GNUInstallDirs)
 if(MSVC)
 	add_definitions(/W3)
 else()
-	add_definitions(-std=c++11 -pedantic -Wall -Wextra)
+	add_definitions(-std=c++20 -pedantic -Wall -Wextra)
 endif()
 
 set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/lib)

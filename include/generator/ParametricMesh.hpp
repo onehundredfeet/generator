@@ -11,6 +11,7 @@
 
 
 #include "Triangle.hpp"
+#include "Quad.hpp"
 #include "MeshVertex.hpp"
 
 
@@ -41,6 +42,25 @@ public:
 	friend class ParametricMesh;
 	};
 
+	class Quads {
+	public:
+
+		Quad generate() const;
+		bool done() const noexcept;
+		void next();
+
+	private:
+
+		Quads(const ParametricMesh& mesh);
+
+		const ParametricMesh* mesh_;
+
+		gml::ivec2 i_;
+
+		
+		friend class ParametricMesh;
+	};
+
 	class Vertices {
 	public:
 
@@ -69,6 +89,8 @@ public:
 	) noexcept;
 
 	Triangles triangles() const noexcept;
+
+	Quads quads() const noexcept;
 
 	Vertices vertices() const noexcept;
 

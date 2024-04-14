@@ -63,7 +63,44 @@ void ParametricMesh::Triangles::next() {
 }
 
 
+ParametricMesh::Quads::Quads(const ParametricMesh& mesh) :
+	mesh_{&mesh},
+	i_{0}
+{ }
 
+
+Quad ParametricMesh::Quads::generate() const {
+	if (done()) throw std::out_of_range("Done!");
+
+	Quad quad;
+
+	const int base = i_[1] * (mesh_->segments_[0] + 1) + i_[0];
+
+	quad.vertices = {
+		base,
+		base + 1,
+		base + mesh_->segments_[0] + 1,
+		base + mesh_->segments_[0] + 2
+	};
+
+
+	return quad;
+}
+
+bool ParametricMesh::Quads::done() const noexcept {
+	if (mesh_->segments_[0] == 0 || mesh_->segments_[1] == 0) return true;
+	return i_[1] == mesh_->segments_[1];
+}
+
+void ParametricMesh::Quads::next() {
+	if (done()) throw std::out_of_range("Done!");
+
+	++i_[0];
+	if (i_[0] == mesh_->segments_[0]) {
+		i_[0] = 0;
+		++i_[1];
+	}
+}
 
 ParametricMesh::Vertices::Vertices(const ParametricMesh& mesh) :
 	mesh_{&mesh}, i_{0}
@@ -111,6 +148,9 @@ ParametricMesh::Triangles ParametricMesh::triangles() const noexcept {
 	return *this;
 }
 
+ParametricMesh::Quads ParametricMesh::quads() const noexcept {
+	return *this;
+}
 
 ParametricMesh::Vertices ParametricMesh::vertices() const noexcept {
 	return *this;
